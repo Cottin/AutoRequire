@@ -1,0 +1,26 @@
+{
+	"auto_require" : [
+		{
+			"name": "ramda",
+
+			"keywords": ["F","T","__","add","adjust","all","allPass","always","any","anyPass","ap","aperture","append","apply","arity",
+			"assoc","assocPath","binary","bind","both","call","chain","clone","commute","commuteMap","comparator","complement",
+			"compose","composeL","composeP","concat","cond","construct","constructN","contains","containsWith","converge","countBy",
+			"createMapEntry","curry","curryN","dec","defaultTo","difference","differenceWith","dissoc","dissocPath","divide","drop",
+			"dropRepeats","dropRepeatsWith","dropWhile","either","empty","eq","eqDeep","eqProps","evolve","filter","filterIndexed",
+			"find","findIndex","findLast","findLastIndex","flatten","flip","forEach","forEachIndexed","fromPairs","functions",
+			"functionsIn","groupBy","gt","gte","has","hasIn","head","identity","ifElse","inc","indexOf","init","insert","insertAll",
+			"intersection","intersectionWith","intersperse","into","invert","invertObj","invoke","invoker","isArrayLike","isEmpty",
+			"isNil","isSet","join","keys","keysIn","last","lastIndexOf","length","lens","lensIndex","lensOn","lensProp","lift","liftN",
+			"lt","lte","map","mapAccum","mapAccumRight","mapIndexed","mapObj","mapObjIndexed","match","mathMod","max","maxBy","mean",
+			"median","memoize","merge","mergeAll","min","minBy","modulo","multiply","nAry","negate","none","nth","nthArg","nthChar",
+			"nthCharCode","of","omit","once","partial","partialRight","partition","path","pathEq","pick","pickAll","pickBy","pipe",
+			"pipeL","pipeP","pluck","prepend","product","project","prop","propEq","propOr","props","range","reduce","reduceIndexed",
+			"reduceRight","reduceRightIndexed","reject","rejectIndexed","remove","repeat","replace","reverse","scan","slice","sort",
+			"sortBy","split","strIndexOf","strLastIndexOf","substring","substringFrom","substringTo","subtract","sum","tail","take",
+			"takeWhile","tap","test","times","toLower","toPairs","toPairsIn","toString","toUpper","transduce","trim","type","unapply",
+			"unary","uncurryN","unfold","union","unionWith","uniq","uniqWith","unnest","update","useWith","values","valuesIn","where",
+			"whereEq","wrap","xprod","zip","zipObj","zipWith"]
+		}
+	]
+}
