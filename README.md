@@ -9,19 +9,24 @@ Installation
 
 On Mac
 
+````
 cd ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/
 git clone git://github.com/Cottin/AutoRequire
+````
 
 On Linux
 
+````
 cd ~/.config/sublime-text-3/Packages/
 git clone git://github.com/Cottin/AutoRequire
+````
 
 On Windows
 
+````
 cd %APPDATA%/Sublime Text 3/Packages/
 git clone git://github.com/Cottin/AutoRequire
-
+````
 TODO
 ----
 
