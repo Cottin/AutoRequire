@@ -4,6 +4,39 @@ AutoRequire
 When you save a file, this plugin automatically destructs libraries into the functions from that library that you're
 using in the saved file. You specify what keywords you want destructed in your AutoRequire.sublime-settings file.
 
+Example
+-------
+
+AutoRequire.sublime-settings:
+````
+{
+	"auto_require" : [
+		{
+			"name": "ramda",
+			"keywords": ["map", "inc", "filter", "even"]
+		}
+}
+````
+
+MyFile.coffee before file save:
+````
+{} = require 'ramda' #auto_require:ramda
+
+bigger = map inc, [1,2]
+evens = filter even [1,2]
+````
+
+MyFile.coffee **after** file save:
+````
+{map, inc, filter, even} = require 'ramda' #auto_require:ramda
+
+bigger = map inc, [1,2]
+evens = filter even [1,2]
+````
+
+
+
+
 Installation
 ------------
 
