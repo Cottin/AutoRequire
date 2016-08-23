@@ -63,6 +63,7 @@ git clone git://github.com/Cottin/AutoRequire
 TODO
 ----
 
+- stop xxxx followed by colon to desctuct, e.g. merge: 
 - Make into Package Control
 - Enable more than one destruction per file
 - Update ramda keywords in AutoRequire.sublime-settings to 0.15.0

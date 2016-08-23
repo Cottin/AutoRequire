@@ -3,24 +3,7 @@
 		{
 			"name": "ramda",
 
-			"keywords": ["F","T","__","add","adjust","all","allPass","always","any","anyPass","ap","aperture","append","apply","arity",
-			"assoc","assocPath","binary","bind","both","call","chain","clone","commute","commuteMap","comparator","complement",
-			"compose","composeL","composeP","concat","cond","construct","constructN","contains","containsWith","converge","countBy",
-			"createMapEntry","curry","curryN","dec","defaultTo","difference","differenceWith","dissoc","dissocPath","divide","drop",
-			"dropRepeats","dropRepeatsWith","dropWhile","either","empty","eq","eqDeep","eqProps","evolve","filter","filterIndexed",
-			"find","findIndex","findLast","findLastIndex","flatten","flip","forEach","forEachIndexed","fromPairs","functions",
-			"functionsIn","groupBy","gt","gte","has","hasIn","head","identity","ifElse","inc","indexOf","init","insert","insertAll",
-			"intersection","intersectionWith","intersperse","into","invert","invertObj","invoke","invoker","isArrayLike","isEmpty",
-			"isNil","isSet","join","keys","keysIn","last","lastIndexOf","length","lens","lensIndex","lensOn","lensProp","lift","liftN",
-			"lt","lte","map","mapAccum","mapAccumRight","mapIndexed","mapObj","mapObjIndexed","match","mathMod","max","maxBy","mean",
-			"median","memoize","merge","mergeAll","min","minBy","modulo","multiply","nAry","negate","none","nth","nthArg","nthChar",
-			"nthCharCode","of","omit","once","partial","partialRight","partition","path","pathEq","pick","pickAll","pickBy","pipe",
-			"pipeL","pipeP","pluck","prepend","product","project","prop","propEq","propOr","props","range","reduce","reduceIndexed",
-			"reduceRight","reduceRightIndexed","reject","rejectIndexed","remove","repeat","replace","reverse","scan","slice","sort",
-			"sortBy","split","strIndexOf","strLastIndexOf","substring","substringFrom","substringTo","subtract","sum","tail","take",
-			"takeWhile","tap","test","times","toLower","toPairs","toPairsIn","toString","toUpper","transduce","trim","type","unapply",
-			"unary","uncurryN","unfold","union","unionWith","uniq","uniqWith","unnest","update","useWith","values","valuesIn","where",
-			"whereEq","wrap","xprod","zip","zipObj","zipWith"]
+			"keywords": ["F", "T", "__", "add", "addIndex", "adjust", "all", "allPass", "allUniq", "always", "any", "anyPass", "ap", "aperture", "append", "apply", "assoc", "assocPath", "binary", "bind", "both", "call", "chain", "clone", "commute", "commuteMap", "comparator", "complement", "compose", "composeK", "composeP", "concat", "cond", "construct", "constructN", "contains", "converge", "countBy", "curry", "curryN", "dec", "defaultTo", "difference", "differenceWith", "dissoc", "dissocPath", "divide", "drop", "dropLast", "dropLastWhile", "dropRepeats", "dropRepeatsWith", "dropWhile", "either", "empty", "eqBy", "eqProps", "equals", "evolve", "filter", "find", "findIndex", "findLast", "findLastIndex", "flatten", "flip", "forEach", "fromPairs", "groupBy", "gt", "gte", "has", "hasIn", "head", "identical", "identity", "ifElse", "inc", "indexBy", "indexOf", "init", "insert", "insertAll", "intersection", "intersectionWith", "intersperse", "into", "invert", "invertObj", "invoker", "isArrayLike", "isEmpty", "isNil", "join", "juxt", "keys", "keysIn", "last", "lastIndexOf", "length", "lens", "lensIndex", "lensPath", "lensProp", "lift", "liftN", "lt", "lte", "map", "mapAccum", "mapAccumRight", "mapObjIndexed", "match", "mathMod", "max", "maxBy", "mean", "median", "memoize", "merge", "mergeAll", "mergeWith", "mergeWithKey", "min", "minBy", "modulo", "multiply", "nAry", "negate", "none", "nth", "nthArg", "objOf", "omit", "once", "over", "pair", "partial", "partialRight", "partition", "path", "pathEq", "pathOr", "pathSatisfies", "pick", "pickAll", "pickBy", "pipe", "pipeK", "pipeP", "pluck", "prepend", "product", "project", "prop", "propEq", "propIs", "propOr", "propSatisfies", "props", "range", "reduce", "reduceRight", "reduced", "reject", "remove", "repeat", "replace", "reverse", "scan", "sequence", "set", "slice", "sort", "sortBy", "split", "splitAt", "splitEvery", "splitWhen", "subtract", "sum", "symmetricDifference", "symmetricDifferenceWith", "tail", "take", "takeLast", "takeLastWhile", "takeWhile", "tap", "test", "times", "toLower", "toPairs", "toPairsIn", "toString", "toUpper", "transduce", "transpose", "traverse", "trim", "type", "unapply", "unary", "uncurryN", "unfold", "union", "unionWith", "uniq", "uniqBy", "uniqWith", "unless", "unnest", "update", "useWith", "values", "valuesIn", "view", "where", "whereEq", "without", "wrap", "xprod", "zip", "zipObj", "zipWith"]
 		}
 	]
 }
