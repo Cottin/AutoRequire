@@ -203,68 +203,104 @@ class AutoExport(sublime_plugin.TextCommand):
 	def run(self, edit, user_input=None):
 
 		print('auto_export!')
-		region = self.view.find("auto_export", 0)
-		export_line = self.view.line(region)	
-		export_line_text = self.view.substr(export_line)
-		search = re.search("auto_export:(.*)", export_line_text)
-		if search is None:
-			return
-		name = search.group(1)
-		print('name', name)
+		top_regions = self.view.find_all("auto_export")
 
-		if name == 'none_':
-			exports = []
+		for region in top_regions:
+			export_line = self.view.line(region)	
+			export_line_text = self.view.substr(export_line)
+			search = re.search("auto_export:(.*)", export_line_text)
+			if search is None:
+				return
+			name = search.group(1)
+			print('name', name)
 
-			regions = self.view.find_all("^([a-zA-Z]+[a-zA-Z_0-9]*) =(.*)")
+			if name == 'none_':
+				exports = []
 
-			for r in regions:
-				line = self.view.line(r)	
-				line_text = self.view.substr(line)
-				search = re.search("^([a-zA-Z]+[a-zA-Z_0-9]*) =(.*)", line_text)
-				if search is None:
-					continue
-				left = search.group(1)
-				right = search.group(2)
-				if contains('require')(right):
-					continue
+				regions = self.view.find_all("^([a-zA-Z]+[a-zA-Z_0-9]*) =(.*)")
 
-				exports.append(left)
+				for r in regions:
+					line = self.view.line(r)	
+					line_text = self.view.substr(line)
+					search = re.search("^([a-zA-Z]+[a-zA-Z_0-9]*) =(.*)", line_text)
+					if search is None:
+						continue
+					left = search.group(1)
+					right = search.group(2)
+					if contains('require')(right):
+						continue
 
-			replacement_region = sublime.Region(export_line.b + 1, 9999)
-			exportStr = "module.exports = {" + ", ".join(exports) + "}"
-			self.view.replace(edit, replacement_region, exportStr)
+					exports.append(left)
 
-		elif name == 'phlox':
-			print('phlox')
-			exports = []
+				replacement_region = sublime.Region(export_line.b + 1, 9999)
+				exportStr = "module.exports = {" + ", ".join(exports) + "}"
+				self.view.replace(edit, replacement_region, exportStr)
 
-			regions = self.view.find_all("^([a-zA-Z$]+[a-zA-Z$_0-9]+) = \({(.*)}, {(.*)}\)")
-			print('region', regions)
+			elif name == 'phlox':
+				print('phlox')
+				exports = []
 
-			for r in regions:
-				print('')
-				line = self.view.line(r)	
-				line_text = self.view.substr(line)
-				search = re.search("^([a-zA-Z$]+[a-zA-Z$_0-9]+) = \((\{.*\}), (\{.*\})\)", line_text)
-				if search is None:
-					continue
-				name = search.group(1)
-				data = search.group(2)
-				state = search.group(3)
-				def appendTics(st):
-					return "'" + st + "'"
+				regions = self.view.find_all("^([a-zA-Z$]+[a-zA-Z$_0-9]+) = \({(.*)}, {(.*)}\)")
+				print('region', regions)
 
-				data_ = parse(data)
-				data__ = list(map(appendTics, data_))
-				state_ = parse(state)
-				state__ = list(map(appendTics, state_))
+				for r in regions:
+					print('')
+					line = self.view.line(r)	
+					line_text = self.view.substr(line)
+					search = re.search("^([a-zA-Z$]+[a-zA-Z$_0-9]+) = \((\{.*\}), (\{.*\})\)", line_text)
+					if search is None:
+						continue
+					name = search.group(1)
+					data = search.group(2)
+					state = search.group(3)
+					def appendTics(st):
+						return "'" + st + "'"
 
-				exStr =  '\t' + name + ': {dataDeps: [' + ', '.join(data__) + '], stateDeps: [' + ', '.join(state__) + '], f: ' + name + '}'
-				exports.append(exStr)
+					data_ = parse(data)
+					data__ = list(map(appendTics, data_))
+					state_ = parse(state)
+					state__ = list(map(appendTics, state_))
 
-			replacement_region = sublime.Region(export_line.b + 1, 9999)
-			exportStr = "module.exports = {\n" + ",\n".join(exports) + "\n}"
-			self.view.replace(edit, replacement_region, exportStr)
+					exStr =  '\t' + name + ': {dataDeps: [' + ', '.join(data__) + '], stateDeps: [' + ', '.join(state__) + '], f: ' + name + '}'
+					exports.append(exStr)
+
+				replacement_region = sublime.Region(export_line.b + 1, 9999)
+				exportStr = "module.exports = {\n" + ",\n".join(exports) + "\n}"
+				self.view.replace(edit, replacement_region, exportStr)
+			elif name == 'phlox-vm':
+				print('phlox-vm')
+				exports = []
+
+				print('export_line_text', export_line_text)
+				search = re.search("([a-zA-Z$]+[a-zA-Z$_0-9]+): ", export_line_text)
+				VM_name = search.group(1)
+
+				regions = self.view.find_all("^"+VM_name+" = \({(.*)}, {(.*)}\)")
+
+				for r in regions:
+					print('')
+					line = self.view.line(r)	
+					line_text = self.view.substr(line)
+					search = re.search("^([a-zA-Z$]+[a-zA-Z$_0-9]+) = \((\{.*\}), (\{.*\})\)", line_text)
+					if search is None:
+						continue
+					name = search.group(1)
+					data = search.group(2)
+					state = search.group(3)
+					print(name, data, state)
+
+					def appendTics(st):
+						return "'" + st + "'"
+
+					data_ = parse(data)
+					data__ = list(map(appendTics, data_))
+					state_ = parse(state)
+					state__ = list(map(appendTics, state_))
+
+					exStr =  '\t' + name + ': {dataDeps: [' + ', '.join(data__) + '], stateDeps: [' + ', '.join(state__) + '], f: ' + name + '}'
+					print(exStr)
+
+					self.view.replace(edit, export_line, exStr + ' #auto_export:phlox-vm')
 
 
 

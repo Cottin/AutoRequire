@@ -45,7 +45,13 @@ lifter3_2 = ({a: {a1: {a11}, a2: {a22}, a3}, b: {b1}}, {a, b}) ->
 # lifter7 = ({a: {a1: {a11}, a2: {a22}, a3: {a33}}, b: {b1}}, {}) ->
 # lifter6 = ({a: {a1: {a111}, a2: {a222}, a3}, b: {b1}}, {}) ->
 
+MySuperVM = ({a, b}, {c}) ->
+MySuperDuperVM = ({b: {b1}}, {d}) ->
 
+
+module.exports =
+	MySuperVM: {dataDeps: ['a', 'b'], stateDeps: ['c'], f: MySuperVM} #auto_export:phlox-vm
+	MySuperDuperVM: {dataDeps: ['b.b1'], stateDeps: ['d'], f: MySuperDuperVM} #auto_export:phlox-vm
 
 
 # switch between none_ and phlox below
@@ -55,5 +61,7 @@ module.exports = {
 	lifter2: {dataDeps: ['a', 'b'], stateDeps: [], f: lifter2},
 	lifter3: {dataDeps: ['a.a1', 'b.b1'], stateDeps: [], f: lifter3},
 	lifter3_1: {dataDeps: ['a.a1.a11', 'a.a2', 'a.a3.a33', 'b.b1'], stateDeps: [], f: lifter3_1},
-	lifter3_2: {dataDeps: ['a.a1.a11', 'a.a2.a22', 'a.a3', 'b.b1'], stateDeps: ['a', 'b'], f: lifter3_2}
+	lifter3_2: {dataDeps: ['a.a1.a11', 'a.a2.a22', 'a.a3', 'b.b1'], stateDeps: ['a', 'b'], f: lifter3_2},
+	MySuperVM: {dataDeps: ['a', 'b'], stateDeps: ['c'], f: MySuperVM},
+	MySuperDuperVM: {dataDeps: ['b.b1'], stateDeps: ['d'], f: MySuperDuperVM}
 }
