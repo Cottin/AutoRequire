@@ -1,15 +1,28 @@
-{allPass, filter, inc, map, none} = R = require 'ramda' # auto_require:ramda
+{allPass, filter, inc} = R = require 'ramda' # auto_require:ramda
+{getPath} = R = require 'ramda' # auto_require:ramda-extras
 {createClass, createElement: _, DOM: {div, span, a}} = React = require 'react' # auto_require:react
 
+# ramda
 map inc, [1,2]
 
 filter even, [1,2]
 
 allPass even, []
 
+a_dec_variable = 1 # don't require
+# don't require curry since this is a comment
+obj =
+	any: 1 # don't require obj keys
+
+# ramda-extras
+fmap [1, 2, 3], (x) -> x + 1 - 2 / 3 * 5
+getPath 'a.b.c', {}
 
 
 
+
+
+# react
 Comp = createClass
 	displayName: 'name'
 	mixins: [PureRenderMixin]
@@ -18,6 +31,8 @@ Comp = createClass
 			a {}, 'link'
 			span {}, 'te'
 
+
+# phlox
 myFunc = (a) -> a
 
 _privateFunc = (a) -> a

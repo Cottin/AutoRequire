@@ -39,6 +39,8 @@ class AutoRequire(sublime_plugin.TextCommand):
 		global_settings = sublime.load_settings(self.__class__.__name__+'.sublime-settings')
 		auto_requires = self.view.settings().get('auto_require', global_settings.get('auto_require', '.*'))
 
+		print('------------------')
+		isJs = re.search(r'\.js$', self.view.file_name()) is not None
 
 		# find keeps returning (-1, -1) instead of None, so added a safety here :)
 		safety = 0
@@ -49,7 +51,8 @@ class AutoRequire(sublime_plugin.TextCommand):
 			if safety > 100:
 				break
 
-			region = self.view.find(".*=.*auto_require", startPos)
+			region = self.view.find(".*auto_require", startPos)
+
 			if region is None:
 				break
 
@@ -91,13 +94,23 @@ class AutoRequire(sublime_plugin.TextCommand):
 						keywords_to_use.append(k['aliasFor'] + ": " + k['name'])
 
 				else:
-					if self.view.find("[^a-zA-Z\@\.]" + k + "[^a-zA-Z]", region.b):
+					regK = self.view.find("[^a-zA-Z\@\._]" + k + "[^a-zA-Z\@\._\:]", region.b)
+					if regK:
+
+						lineWithK = self.view.line(regK.a)
+						if re.search(r'auto_require', self.view.substr(lineWithK)):
+							continue
+
+						strToK = self.view.substr(sublime.Region(lineWithK.a, regK.b))
+						if isJs:
+							if re.search(r'\/\/', strToK): continue
+						else:
+							if re.search(r'#', strToK): continue
+
 						keywords_to_use.append(k)
 
 			# note: the ? is needed for un-greedy match so that {} = R = require 'ramda' is replaced with
 			#				{map, filter} = R ... instead of {map, filter} = require 'ramda'
-
-			replacement_region = self.view.find(".*?=", region.a)
 
 			topLevels = ", ".join(keywords_to_use)
 
@@ -107,11 +120,15 @@ class AutoRequire(sublime_plugin.TextCommand):
 					nested += g + ": {" + ", ".join(nested_keywords[g]) + "}"
 
 			items = list(filter(isTruthy, [topLevels, nested]))
-			result = "{" + ", ".join(items) + "} ="
+
+			replacement_region = self.view.find("\{.*\}", region.a)
+			result = "{" + ", ".join(items) + "}"
+
 			self.view.replace(edit, replacement_region, result)
 
 			line = self.view.line(region.a)
 			startPos = line.b
+
 
 
 # Reference implementation in CoffeeScript below.
@@ -159,7 +176,7 @@ class AutoRequire(sublime_plugin.TextCommand):
 # # parse '{a: {a1: {a11}, a2: {a22}, a3}, b: {b1}}'
 # --------------------------------------
 def parse(s, path=[]):
-	print('parse', s, path)
+	# print('parse', s, path)
 	s_ = re.sub(r'\s', '', s)
 	s__ = s_[1:-1]
 	items = []
