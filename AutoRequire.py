@@ -82,6 +82,8 @@ class AutoRequire(sublime_plugin.TextCommand):
 			keywords_to_use = []
 			nested_keywords = {}
 			for k in require_to_use["keywords"]:
+				if k in keywords_to_use: continue
+
 				if isinstance(k, dict):
 					if "group" in k:
 						nested = []
@@ -94,9 +96,8 @@ class AutoRequire(sublime_plugin.TextCommand):
 						keywords_to_use.append(k['aliasFor'] + ": " + k['name'])
 
 				else:
-					regK = self.view.find("[^a-zA-Z\@\._]" + k + "[^a-zA-Z\@\._\:]", region.b)
-					if regK:
-
+					regKs = self.view.find_all("[^a-zA-Z\@\._]" + k + "[^a-zA-Z\@\._\:]")
+					for regK in regKs:
 						lineWithK = self.view.line(regK.a)
 						if re.search(r'auto_require', self.view.substr(lineWithK)):
 							continue
@@ -108,6 +109,7 @@ class AutoRequire(sublime_plugin.TextCommand):
 							if re.search(r'#', strToK): continue
 
 						keywords_to_use.append(k)
+						break # we only add it once
 
 			# note: the ? is needed for un-greedy match so that {} = R = require 'ramda' is replaced with
 			#				{map, filter} = R ... instead of {map, filter} = require 'ramda'

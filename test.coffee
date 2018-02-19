@@ -1,18 +1,24 @@
-{allPass, filter, inc} = R = require 'ramda' # auto_require:ramda
+{allPass, compose, cond, filter, inc} = R = require 'ramda' # auto_require:ramda
 {getPath} = R = require 'ramda' # auto_require:ramda-extras
 {createClass, createElement: _, DOM: {div, span, a}} = React = require 'react' # auto_require:react
 
 # ramda
 map inc, [1,2]
 
-filter even, [1,2]
+filter inc, [1,2]
 
-allPass even, []
+allPass cond, []
+
+# compose
+f2 = compose inc(1), inc(2)
 
 a_dec_variable = 1 # don't require
 # don't require curry since this is a comment
 obj =
 	any: 1 # don't require obj keys
+
+# don't include keywords
+allPass when, and, not, or
 
 # ramda-extras
 fmap [1, 2, 3], (x) -> x + 1 - 2 / 3 * 5
