@@ -1,4 +1,4 @@
-{allPass, compose, cond, filter, inc} = R = require 'ramda' # auto_require:ramda
+{allPass, compose, cond, dissoc, filter, inc, innerJoin, join} = R = require 'ramda' # auto_require:ramda
 {getPath} = R = require 'ramda' # auto_require:ramda-extras
 {createClass, createElement: _, DOM: {div, span, a}} = React = require 'react' # auto_require:react
 
@@ -14,6 +14,8 @@ f2 = compose inc(1), inc(2)
 
 a_dec_variable = 1 # don't require
 # don't require curry since this is a comment
+msg = "CHANGE: #{join(',', dataPaths)}" # include join. Improvement: don't include innerJoin
+a = dissoc(a) #
 obj =
 	any: 1 # don't require obj keys
 

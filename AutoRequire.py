@@ -39,7 +39,6 @@ class AutoRequire(sublime_plugin.TextCommand):
 		global_settings = sublime.load_settings(self.__class__.__name__+'.sublime-settings')
 		auto_requires = self.view.settings().get('auto_require', global_settings.get('auto_require', '.*'))
 
-		print('------------------')
 		isJs = re.search(r'\.js$', self.view.file_name()) is not None
 
 		# find keeps returning (-1, -1) instead of None, so added a safety here :)
@@ -106,7 +105,10 @@ class AutoRequire(sublime_plugin.TextCommand):
 						if isJs:
 							if re.search(r'\/\/', strToK): continue
 						else:
-							if re.search(r'#', strToK): continue
+							hashMatch = re.search(r'#', strToK)
+							if hashMatch:
+								charAfterHash = strToK[hashMatch.span()[1] : hashMatch.span()[1]+1]
+								if charAfterHash is not '{': continue
 
 						keywords_to_use.append(k)
 						break # we only add it once
@@ -221,7 +223,7 @@ def parse(s, path=[]):
 class AutoExport(sublime_plugin.TextCommand):
 	def run(self, edit, user_input=None):
 
-		print('auto_export!')
+		print('auto_export! -----------------------------')
 		top_regions = self.view.find_all("auto_export")
 
 		for region in top_regions:
@@ -231,7 +233,7 @@ class AutoExport(sublime_plugin.TextCommand):
 			if search is None:
 				return
 			name = search.group(1)
-			print('name', name)
+			# print('name', name)
 
 			if name == 'none_':
 				exports = []
@@ -256,14 +258,12 @@ class AutoExport(sublime_plugin.TextCommand):
 				self.view.replace(edit, replacement_region, exportStr)
 
 			elif name == 'phlox':
-				print('phlox')
+				# print('phlox')
 				exports = []
 
 				regions = self.view.find_all("^([a-zA-Z$]+[a-zA-Z$_0-9]+) = \({(.*)}, {(.*)}\)")
-				print('region', regions)
 
 				for r in regions:
-					print('')
 					line = self.view.line(r)	
 					line_text = self.view.substr(line)
 					search = re.search("^([a-zA-Z$]+[a-zA-Z$_0-9]+) = \((\{.*\}), (\{.*\})\)", line_text)
@@ -287,17 +287,15 @@ class AutoExport(sublime_plugin.TextCommand):
 				exportStr = "module.exports = {\n" + ",\n".join(exports) + "\n}"
 				self.view.replace(edit, replacement_region, exportStr)
 			elif name == 'phlox-vm':
-				print('phlox-vm')
+				# print('phlox-vm')
 				exports = []
 
-				print('export_line_text', export_line_text)
 				search = re.search("([a-zA-Z$]+[a-zA-Z$_0-9]+): ", export_line_text)
 				VM_name = search.group(1)
 
 				regions = self.view.find_all("^"+VM_name+" = \({(.*)}, {(.*)}\)")
 
 				for r in regions:
-					print('')
 					line = self.view.line(r)	
 					line_text = self.view.substr(line)
 					search = re.search("^([a-zA-Z$]+[a-zA-Z$_0-9]+) = \((\{.*\}), (\{.*\})\)", line_text)
@@ -306,7 +304,6 @@ class AutoExport(sublime_plugin.TextCommand):
 					name = search.group(1)
 					data = search.group(2)
 					state = search.group(3)
-					print(name, data, state)
 
 					def appendTics(st):
 						return "'" + st + "'"
@@ -317,7 +314,6 @@ class AutoExport(sublime_plugin.TextCommand):
 					state__ = list(map(appendTics, state_))
 
 					exStr =  '\t' + name + ': {dataDeps: [' + ', '.join(data__) + '], stateDeps: [' + ', '.join(state__) + '], f: ' + name + '}'
-					print(exStr)
 
 					self.view.replace(edit, export_line, exStr + ' #auto_export:phlox-vm')
 
