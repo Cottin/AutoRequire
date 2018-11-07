@@ -1,7 +1,7 @@
-{allPass, compose, cond, dissoc, filter, inc, innerJoin, join} = R = require 'ramda' # auto_require:ramda
+{allPass, compose, cond, dissoc, filter, inc, innerJoin, join, test} = R = require 'ramda' # auto_require:ramda
 {getPath} = R = require 'ramda' # auto_require:ramda-extras
 {createClass, createElement: _, DOM: {div, span, a}} = React = require 'react' # auto_require:react
-[ːcategory, ːtough_case, ːage, ːname] = ['category', 'tough_case', 'age', 'name'] #auto_sugar
+[ːtest, ːcategory, ːtough_case, ːage, ːname] = ['test', 'category', 'tough_case', 'age', 'name'] #auto_sugar
 
 # ramda
 map inc, [1,2]
@@ -30,7 +30,7 @@ getPath 'a.b.c', {}
 
 # Sugar
 query =
-	ـUser {gpa: {gt: 4.4}, ːname ːage},
+	ـUser {gpa: {gt: 4.4}, ːname, ːage, ːtest},
 		ـbff {ːname},
 			ـfavoriteCourse {id: {gt: 3}, ːname}
 		ـfavoriteCourse {id: 2, ːname ːcategory}
