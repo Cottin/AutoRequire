@@ -318,7 +318,39 @@ class AutoExport(sublime_plugin.TextCommand):
 					self.view.replace(edit, export_line, exStr + ' #auto_export:phlox-vm')
 
 
+class AutoSugar(sublime_plugin.TextCommand):
+	def run(self, edit, user_input=None):
 
+		sugar_regions = self.view.find_all("auto" + "_sugar")
+		if not sugar_regions: return
+
+		line = self.view.line(sugar_regions[0])
+		# if we leave this, we'll get matches here
+		self.view.replace(edit, line, "auto____sugar_temp_replacement")
+
+		print('auto sugar! ---------------------------------')
+
+		regions1 = self.view.find_all("\s(:\w+)")
+
+		for r in regions1:
+			s = self.view.substr(r)
+			self.view.replace(edit, r, s.replace(':', 'ː'))
+
+		regions2 = self.view.find_all("(ː\w+)")
+
+		xs = []
+		for r in regions2:
+			s = self.view.substr(r)
+			xs.append(s)
+
+		uniqueXs = list(set(xs))
+
+		line = self.view.line(self.view.find_all("auto____sugar_temp_replacement")[0])
+		line_text = self.view.substr(line)
+		left = "[" + ", ".join(uniqueXs) + "]"
+		right = "[" + ", ".join(["'" + x.replace("ː", "") + "'" for x in uniqueXs]) + "]"
+		sugar = left + " = " + right
+		self.view.replace(edit, line, sugar + " #auto" + "_sugar")
 
 		
 
@@ -327,4 +359,5 @@ class AutoRequireEventListener(sublime_plugin.EventListener):
 		def on_pre_save(self, view):
 			view.run_command("auto_require")
 			view.run_command("auto_export")
+			view.run_command("auto_" + "sugar")
 

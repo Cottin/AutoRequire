@@ -1,5 +1,5 @@
-import R, {} from 'ramda' // auto_require:ramda
-import {} from 'ramda-extras' // auto_require:ramda-extras
+import R, {allPass, filter, inc} from 'ramda' // auto_require:ramda
+import {getPath} from 'ramda-extras' // auto_require:ramda-extras
 import React, {createClass, createElement: _, DOM: {div, span, a}} from 'react' // auto_require:react
 
 // node style
@@ -19,8 +19,9 @@ const obj = {
 }
 
 // // ramda-extras
-// fmap [1, 2, 3], (x) -> x + 1 - 2 / 3 * 5
-// getPath 'a.b.c', {}
+fmap [1, 2, 3], (x) -> x + 1 - 2 / 3 * 5
+getPath 'a.b.c', {}
+yreduce 1, 2, 3
 
 
 

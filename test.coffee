@@ -1,6 +1,7 @@
 {allPass, compose, cond, dissoc, filter, inc, innerJoin, join} = R = require 'ramda' # auto_require:ramda
 {getPath} = R = require 'ramda' # auto_require:ramda-extras
 {createClass, createElement: _, DOM: {div, span, a}} = React = require 'react' # auto_require:react
+[ːcategory, ːtough_case, ːage, ːname] = ['category', 'tough_case', 'age', 'name'] #auto_sugar
 
 # ramda
 map inc, [1,2]
@@ -26,6 +27,17 @@ allPass when, and, not, or
 fmap [1, 2, 3], (x) -> x + 1 - 2 / 3 * 5
 getPath 'a.b.c', {}
 
+
+# Sugar
+query =
+	ـUser {gpa: {gt: 4.4}, ːname ːage},
+		ـbff {ːname},
+			ـfavoriteCourse {id: {gt: 3}, ːname}
+		ـfavoriteCourse {id: 2, ːname ːcategory}
+
+test:1
+
+a = 'this is a ːtough_case '
 
 
 
