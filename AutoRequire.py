@@ -62,7 +62,7 @@ class AutoRequire(sublime_plugin.TextCommand):
 
 			line = self.view.line(region)	
 			line_text = self.view.substr(line)
-			name_search = re.search("auto_require:(.*)", line_text)
+			name_search = re.search("auto_require: (.*)", line_text)
 			if name_search is None:
 				return
 			name = name_search.group(1)
@@ -332,7 +332,8 @@ class AutoSugar(sublime_plugin.TextCommand):
 
 		print('auto_sugar! ---------------------------------')
 
-		regions1 = self.view.find_all("\s(:\w+)")
+		# regions1 = self.view.find_all("\s(:\w+)")
+		regions1 = self.view.find_all("(:\w+)")
 
 		for r in regions1:
 			s = self.view.substr(r)

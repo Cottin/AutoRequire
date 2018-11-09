@@ -1,7 +1,7 @@
-{allPass, compose, cond, dissoc, filter, inc, innerJoin, join, test} = R = require 'ramda' # auto_require:ramda
-{getPath} = R = require 'ramda' # auto_require:ramda-extras
-{createClass, createElement: _, DOM: {div, span, a}} = React = require 'react' # auto_require:react
-[ːtest, ːcategory, ːtough_case, ːage, ːname] = ['test', 'category', 'tough_case', 'age', 'name'] #auto_sugar
+{allPass, compose, cond, dissoc, filter, inc, innerJoin, join, test} = R = require 'ramda' # auto_require: ramda
+{getPath} = R = require 'ramda' # auto_require: ramda-extras
+{createClass, createElement: _, DOM: {div, span, a}} = React = require 'react' # auto_require: react
+[ːphlox, ːtough_case, ːage, ː1, ːtest, ːname, ːcategory] = ['phlox', 'tough_case', 'age', '1', 'test', 'name', 'category'] #auto_sugar
 
 # ramda
 map inc, [1,2]
@@ -35,7 +35,7 @@ query =
 			ـfavoriteCourse {id: {gt: 3}, ːname}
 		ـfavoriteCourse {id: 2, ːname ːcategory}
 
-test:1
+testː1
 
 a = 'this is a ːtough_case '
 
@@ -85,12 +85,12 @@ MySuperDuperVM = ({b: {b1}}, {d}) ->
 
 
 module.exports =
-	MySuperVM: {dataDeps: ['a', 'b'], stateDeps: ['c'], f: MySuperVM} #auto_export:phlox-vm
-	MySuperDuperVM: {dataDeps: ['b.b1'], stateDeps: ['d'], f: MySuperDuperVM} #auto_export:phlox-vm
+	MySuperVM: {dataDeps: ['a', 'b'], stateDeps: ['c'], f: MySuperVM} #auto_exportːphlox-vm
+	MySuperDuperVM: {dataDeps: ['b.b1'], stateDeps: ['d'], f: MySuperDuperVM} #auto_exportːphlox-vm
 
 
 # switch between none_ and phlox below
-# auto_export:phlox
+# auto_exportːphlox
 module.exports = {
 	lifter: {dataDeps: [], stateDeps: [], f: lifter},
 	lifter2: {dataDeps: ['a', 'b'], stateDeps: [], f: lifter2},
