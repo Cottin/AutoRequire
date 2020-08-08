@@ -1,0 +1,19 @@
+{
+	"popsiql": {
+		"endpoints": [
+			"http://localhost:3222/popsiql",
+			"http://localhost:3882/popsiql",
+			"http://localhost:3892/popsiql",
+			"http://localhost:3882/popsiql?dev=1",
+			"http://localhost:3892/popsiql?dev=1",
+			"http://localhost:3892/popsiql?dev=-666",
+			"http://localhost:3882/popsiql?normalize=true",
+			"http://localhost:3882/popsiql?ramda=true",
+			"http://localhost:8012/popsiql",
+			"http://localhost:8012/popsiql?normalize=true",
+			"https://tid-test-258323.appspot.com/popsiql",
+			"testB",
+			"testC",
+		]
+	}
+}

@@ -1,0 +1,4 @@
+[
+	{ "caption": "POPSIQL: choose endpoint", "command": "auto_require_choose_endpoint" },
+	{ "caption": "Goto Something", "command": "auto_require_goto_something" }
+]
