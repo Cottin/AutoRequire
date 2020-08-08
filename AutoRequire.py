@@ -539,6 +539,8 @@ class AutoRequireGotoSomething(sublime_plugin.TextCommand):
 		something_defs = []
 		defs_regions = self.view.find_all(r'goto_something:(.*)', 0, '$1', something_defs)
 		patterns = something_defs[0].split('///')
+		if len(patterns) == 0:
+			patterns = ['^(\w*) ='] # default if nothing else specified
 		somethings = []
 		for p in patterns:
 			extractions = []
