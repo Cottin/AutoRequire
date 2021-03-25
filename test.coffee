@@ -2,7 +2,7 @@
 {change, $} = RE = require 'ramda-extras' #auto_require: ramda-extras
 {createClass, createElement: _, DOM: {div, span, p, a, input}} = React = require 'react' # auto_require: react
 {} = require 'negin' # auto_require: negin
-[ːcategory, ːname, ːtough_case, ːtest, ːage] = ['category', 'name', 'tough_case', 'test', 'age'] #auto_sugar
+[ːage, ːtest, ːcategory, ːname, ːtough_case] = ['age', 'test', 'category', 'name', 'tough_case'] #auto_sugar
 
 # ramda
 map inc, [1,2]
@@ -10,6 +10,7 @@ map inc, [1,2]
 filter inc, [1,2]
 
 allPass cond, []
+
 
 # compose
 f2 = compose inc(1), inc(2)
@@ -28,8 +29,7 @@ allPass when, and, not, or
 fmap [1, 2, 3], (x) -> x + 1 - 2 / 3 * 5
 getPath 'a.b.c', {}
 change.meta {a: 1}, {}, {}, {}
-
-
+as Λ.dasd Λ.a
 # Sugar
 query =
 	ـUser {gpa: {gt: 4.4}, ːname, ːage, ːtest},

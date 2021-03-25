@@ -96,8 +96,8 @@ class AutoRequire(sublime_plugin.TextCommand):
 
 			keywords_to_use = []
 			nested_keywords = {}
-			print(123455)
-			print(require_to_use)
+			# print(123455)
+			# print(require_to_use)
 			for k in require_to_use["keywords"]:
 				if k in keywords_to_use: continue
 
@@ -116,7 +116,8 @@ class AutoRequire(sublime_plugin.TextCommand):
 				else:
 					# if k.startswith("REGEX:"):
 					# 	print('regex!')
-					print(name)
+					# print(name)
+					a = 1
 
 					regKs = []
 					isRegEx = k.startswith('===')
@@ -314,7 +315,8 @@ class AutoExport(sublime_plugin.TextCommand):
 
 					exports.append(left)
 
-				replacement_region = sublime.Region(export_line.b + 1, 99999999)
+				replacement_region = sublime.Region(export_line.b + 1, 99999999999)
+
 
 				print(replacement_region)
 				exportStr = "module.exports = {" + ", ".join(exports) + extraStr + "}"
@@ -346,7 +348,7 @@ class AutoExport(sublime_plugin.TextCommand):
 
 					exports.append(left)
 
-				replacement_region = sublime.Region(export_line.b + 1, 9999)
+				replacement_region = sublime.Region(export_line.b + 1, 9999999999)
 				exportStr = "module.exports = {" + ", ".join(exports) + extraStr + "}"
 				self.view.replace(edit, replacement_region, exportStr)
 
@@ -423,14 +425,14 @@ class AutoSugar(sublime_plugin.TextCommand):
 		# if we leave this, we'll get matches here
 		self.view.replace(edit, line, "auto_sugar_temp_replacement")
 
-		print('auto_sugar! ---------------------------------')
+		# print('auto_sugar! ---------------------------------')
 
-		# regions1 = self.view.find_all("\s(:\w+)")
-		regions1 = self.view.find_all("[\[\(\s\{](:\w+)")
+		# Removed automatic convertion of : -> ː
+		# regions1 = self.view.find_all("[\[\(\s\{](:\w+)")
 
-		for r in regions1:
-			s = self.view.substr(r)
-			self.view.replace(edit, r, s.replace(':', 'ː'))
+		# for r in regions1:
+		# 	s = self.view.substr(r)
+		# 	self.view.replace(edit, r, s.replace(':', 'ː'))
 
 		regions2 = self.view.find_all("(ː\w+)")
 
@@ -528,25 +530,29 @@ class AutoRequireChooseEndpoint(sublime_plugin.TextCommand):
 		if index == -1:
 			return
 
-		print('..........')
-		print(self.endpoints[index])
+		# print('..........')
+		# print(self.endpoints[index])
 		global popsiql_endpoint
 		popsiql_endpoint = self.endpoints[index]
 
 class AutoRequireGotoSomething(sublime_plugin.TextCommand):
 	def run(self, edit):
-		print('! GOTO something ---------------------------------')
+		# print('! GOTO something ---------------------------------')
 		something_defs = []
 		defs_regions = self.view.find_all(r'goto_something:(.*)', 0, '$1', something_defs)
-		patterns = something_defs[0].split('///')
-		if len(patterns) == 0:
+		patterns = []
+		if len(something_defs) == 0:
 			patterns = ['^(\w*) ='] # default if nothing else specified
+		else:
+			patterns = something_defs[0].split('///')
 		somethings = []
 		for p in patterns:
 			extractions = []
 			something_regions = self.view.find_all(p, 0, '$1', extractions)
 			for [ex, reg] in zip(extractions, something_regions):
-				if len(ex) > 0 and reg.a > defs_regions[0].b:
+				if len(ex) > 0:
+					if len(defs_regions) > 0 and reg.a < defs_regions[0].b:
+						continue
 					somethings.append([ex, reg])
 		somethings.sort(key=lambda x: x[1].a)
 		texts = [x[0] for x in somethings]
@@ -594,7 +600,7 @@ class AutoRequireBlockCommand(sublime_plugin.TextCommand):
 		try:
 			resp = request.urlopen(req)
 			result = resp.read().decode('utf-8')
-			print(result)
+			# print(result)
 			if result == '': result = 'null'
 			wrapped_js = "console.log('var __RESULT__ = ' + require('util').inspect(" + result + ", {showHidden: false, depth: null}))"
 			result_inspect = runPopen(["coffee", '-e', wrapped_js])
@@ -603,7 +609,7 @@ class AutoRequireBlockCommand(sublime_plugin.TextCommand):
 			# With this, the continuation doesn't work: https://www.w3schools.com/python/python_file_write.asp
 			# But with this it does: https://stackoverflow.com/questions/6159900/correct-way-to-write-line-to-file
 			temp_file = '/tmp/temp_file.js' 
-			print(result_inspect)
+			# print(result_inspect)
 			with codecs.open(temp_file, 'w', 'utf-8') as the_file:
 				the_file.write(result_inspect)
 
@@ -666,4 +672,36 @@ class AutoRequireEventListener(sublime_plugin.EventListener):
 			view.run_command("auto_require")
 			view.run_command("auto_export")
 			view.run_command("auto_sugar")
+
+		# def on_query_completions(self, view, prefix, locations):
+		# 	tree = {'a': {'aa': {}, 'ab': {}},
+		# 					'b': {'ba': {'bb': {}}, 'bc': {}}}
+
+		# 	print(prefix)
+		# 	print(locations)
+		# 	line = view.line(locations[0])	
+		# 	print(line)
+		# 	line_text = view.substr(line)
+		# 	print(line_text)
+		# 	if not 'Λ' in line_text:
+		# 		return None
+		# 	full_prefix = re.compile('.*Λ').sub('Λ', line_text)
+		# 	print('-----')
+		# 	print(full_prefix)
+		# 	path = full_prefix.split('.')
+		# 	matches = []
+		# 	tree_pointer = tree
+		# 	for p in path[1:]:
+		# 		print('p', p, 'p in tree_pointer', p in tree_pointer)
+		# 		if p in tree_pointer:
+		# 			tree_pointer = tree_pointer[p]
+		# 		else:
+		# 			matches = tree_pointer.keys()
+		# 			break
+
+		# 	print('tree_pointer', tree_pointer)
+		# 	print('keys', tree_pointer.keys())
+
+		# 	# matches = [('aaaaaa', 'aaaaa1'), ('bbbb', 'ccccc')]
+		# 	return (matches, sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS)
 
